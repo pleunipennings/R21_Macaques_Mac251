@@ -1,0 +1,11 @@
+#Large data files
+ProcessedData/Run*/
+
+#History files
+.Rhistory
+.Rapp.history
+
+# Session Data files
+.RData
+.DS_Store
+.Rproj.user

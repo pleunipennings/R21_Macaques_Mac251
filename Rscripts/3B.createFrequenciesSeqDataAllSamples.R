@@ -6,6 +6,8 @@ read.csv("ProcessedData/PositionsSameStock.csv")->PositionsToUse
 no_df<-data.frame("pos"=PositionsToUse$x)
 read.csv("ProcessedData/RefPositionsSameStock.csv")->RefPositionsToUse
 
+print(nrow(RefPositionsToUse))
+
 for (i in 1:length(SIVFiles)){
   print(i)
   SeqData<-read.csv(paste("ProcessedData/CSV/",SIVFiles[i],sep=""))

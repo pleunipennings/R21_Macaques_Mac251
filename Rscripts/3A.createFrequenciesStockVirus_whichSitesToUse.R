@@ -15,8 +15,8 @@ for (i in stockrows){
         SeqData<-SeqData[,-c(1,2,9)]
         colnames(SeqData)[1]<-"pos"
         colnames(SeqData)[7:8]<-c("deletion","insertion")
-        #remove the reads<100 
-        SeqData<-SeqData[-which(SeqData$TotalReads<100),] #PSP I don't think this is needed FEB 2020 now I do!
+        #remove the reads<1000 
+        SeqData<-SeqData[-which(SeqData$TotalReads<10000),] #PSP March 23 2020 now removing <1000 instead of <100 #PSP I don't think this is needed FEB 2020 now I do!
         #determine the majority nucleotide base at each site
         colnames(SeqData)[2:5]<-c("a","c","g","t")
         SeqData$MajNt<-apply(SeqData[,2:5],1,function(x) c("a","c","g","t")[which.max(x)])
@@ -45,7 +45,7 @@ SeqData_stock6<-read.csv("ProcessedData/SeqData/Run_6_01_Animal_stockvirusSeqDat
 
 length(which(SeqData_stock5$MajNt != SeqData_stock6$MajNt)) # 5 positions are different
 
-length(which(SeqData_stock5$MajNt == SeqData_stock6$MajNt)) #475 are the same
+length(which(SeqData_stock5$MajNt == SeqData_stock6$MajNt)) #475 are the same #March 25 only 449 left because of more stringent filtering
 
 SeqData_stock5[which(SeqData_stock5$MajNt != SeqData_stock6$MajNt),]
 SeqData_stock6[which(SeqData_stock5$MajNt != SeqData_stock6$MajNt),]

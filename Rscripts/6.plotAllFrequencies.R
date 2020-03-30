@@ -31,6 +31,7 @@ for (M in UniqueMonkeys){
     points(x=PositionsToUse$x,y=X$c/X$TotalReads,pch=16, col=alpha(cols[counter],0.5))
     points(x=PositionsToUse$x,y=X$g/X$TotalReads,pch=16, col=alpha(cols[counter],0.5))
     points(x=PositionsToUse$x,y=X$t/X$TotalReads,pch=16, col=alpha(cols[counter],0.5))
+    
     text(x = 450,y = 10^(-4+counter*0.2), labels = SampleSheet$Sample[mr], col=cols[counter])
     counter = counter +1
   }

@@ -56,7 +56,7 @@ pdf(paste0("Output/DiversityPiInMonkeys_oneplot",Sys.Date(),".pdf"), width = 16,
 
 par(mar=c(10, 4, 4, 4))
 
-plot(1 :nrow(OverviewDF), OverviewDF$avePi, type = "n", ylim = c(0.004, max(OverviewDF$avePi)), 
+plot(1 :nrow(OverviewDF), OverviewDF$avePi, type = "n", ylim = c(0.0004, max(OverviewDF$avePi)), 
      xlab="", xaxt="n")
 counter = 1
 for (M in UniqueMonkeys){

@@ -27,12 +27,14 @@ for (M in UniqueMonkeys){
     sdf=SampleSheet$SeqDataFileName[mr]
     print(sdf)
     X<-read.csv(paste0("ProcessedData/SeqData/",sdf), row.names = 1)
-    points(x=PositionsToUse$x,y=X$a/X$TotalReads,pch=16, col=alpha(cols[counter],0.5))
-    points(x=PositionsToUse$x,y=X$c/X$TotalReads,pch=16, col=alpha(cols[counter],0.5))
-    points(x=PositionsToUse$x,y=X$g/X$TotalReads,pch=16, col=alpha(cols[counter],0.5))
-    points(x=PositionsToUse$x,y=X$t/X$TotalReads,pch=16, col=alpha(cols[counter],0.5))
+    X<-X[which(X$TotalReads>=10000),]
+    points(x=X$pos,y=X$a/X$TotalReads,pch=16, col=alpha(cols[counter],0.5))
+    points(x=X$pos,y=X$c/X$TotalReads,pch=16, col=alpha(cols[counter],0.5))
+    points(x=X$pos,y=X$g/X$TotalReads,pch=16, col=alpha(cols[counter],0.5))
+    points(x=X$pos,y=X$t/X$TotalReads,pch=16, col=alpha(cols[counter],0.5))
     
-    text(x = 450,y = 10^(-4+counter*0.2), labels = SampleSheet$Sample[mr], col=cols[counter])
+    if (M!="stockvirus")text(x = 450,y = 10^(-4+counter*0.2), labels = SampleSheet$Sample[mr], col=cols[counter])
+    if (M=="stockvirus")text(x = 450,y = 10^(-4+counter*0.2), labels = paste0(SampleSheet$Sample[mr], " ", SampleSheet$Miseq.Date[mr]), col=cols[counter])
     counter = counter +1
   }
 }

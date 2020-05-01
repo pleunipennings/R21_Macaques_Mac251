@@ -2,8 +2,6 @@
 SeqData_stock5<-read.csv("ProcessedData/SeqData/Run_5_01_Animal_stockvirusSeqData.csv", row.names = 1)
 SeqData_stock6<-read.csv("ProcessedData/SeqData/Run_6_01_Animal_stockvirusSeqData.csv", row.names = 1)
 
-
-
 SeqData_stock5$MaxMutFreq<-0
 columns=which(names(SeqData_stock5)%in%c("a","c","g","t"))
 nts<-c("a","c","g","t")

@@ -60,4 +60,8 @@ write.csv(x = SeqData_stock5$pos[which(SeqData_stock5$MajNt == SeqData_stock6$Ma
 write.csv(x = SeqData_stock5$ref[which(SeqData_stock5$MajNt == SeqData_stock6$MajNt)], 
           file = "ProcessedData/RefPositionsSameStock.csv", row.names = FALSE)
 
+#Pleuni May 1st 2020
+#Alternative to not filter out the 5 sites that are different between the stock samples: 
+#write.csv(x = SeqData_stock5$pos, file = "ProcessedData/PositionsSameStock.csv", row.names = FALSE)
+#write.csv(x = SeqData_stock5$ref, file = "ProcessedData/RefPositionsSameStock.csv", row.names = FALSE)
 

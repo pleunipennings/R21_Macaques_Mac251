@@ -13,3 +13,4 @@ sdf=SampleSheet$SeqDataFileName[1]
 X<-read.csv(paste0("ProcessedData/SeqData/",sdf), row.names = 1)
 
 #First 90 nucleotides are in frame :-) 
+

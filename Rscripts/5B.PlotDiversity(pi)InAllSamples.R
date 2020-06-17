@@ -7,12 +7,12 @@ SeqDataFiles<-list.files("ProcessedData/",pattern="SeqData.csv$", recursive = TR
 SampleSheet$Week<-as.numeric(SampleSheet$Week)
 SampleSheet<-SampleSheet[order(SampleSheet$Week),]
 SampleSheet$avePi <-0
-
+  
 UniqueMonkeys<-unique(SampleSheet$Monkey)
 
 pdf(paste0("Output/DiversityPiInMonkeys",Sys.Date(),".pdf"))
 for (M in UniqueMonkeys){
-  #M=UniqueMonkeys[1]
+  M=UniqueMonkeys[1]
   monkeyrows<-which(SampleSheet$Monkey==M)  
   sampleinfo=c()
   for (i in monkeyrows){sampleinfo<-c(sampleinfo, paste0(SampleSheet$Sample[i],"_w_",SampleSheet$Week[i]))}

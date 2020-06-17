@@ -54,14 +54,12 @@ SeqData_stock6[which(SeqData_stock5$MajNt != SeqData_stock6$MajNt),]
 #Focus analysis on positions that are the same in the two Stock virus samples. 
 #Writing the positions to a csv file. 
 
-write.csv(x = SeqData_stock5$pos[which(SeqData_stock5$MajNt == SeqData_stock6$MajNt)], 
-          file = "ProcessedData/PositionsSameStock.csv", row.names = FALSE)
+#write.csv(x = SeqData_stock5$pos[which(SeqData_stock5$MajNt == SeqData_stock6$MajNt)],file = "ProcessedData/PositionsSameStock.csv", row.names = FALSE)
 
-write.csv(x = SeqData_stock5$ref[which(SeqData_stock5$MajNt == SeqData_stock6$MajNt)], 
-          file = "ProcessedData/RefPositionsSameStock.csv", row.names = FALSE)
+#write.csv(x = SeqData_stock5$ref[which(SeqData_stock5$MajNt == SeqData_stock6$MajNt)],file = "ProcessedData/RefPositionsSameStock.csv", row.names = FALSE)
 
 #Pleuni May 1st 2020
 #Alternative to not filter out the 5 sites that are different between the stock samples: 
-#write.csv(x = SeqData_stock5$pos, file = "ProcessedData/PositionsSameStock.csv", row.names = FALSE)
-#write.csv(x = SeqData_stock5$ref, file = "ProcessedData/RefPositionsSameStock.csv", row.names = FALSE)
+write.csv(x = SeqData_stock5$pos[SeqData_stock5$pos<=715], file = "ProcessedData/PositionsSameStock.csv", row.names = FALSE)
+write.csv(x = SeqData_stock5$ref[SeqData_stock5$pos<=715], file = "ProcessedData/RefPositionsSameStock.csv", row.names = FALSE)
 

@@ -35,6 +35,10 @@ for (M in UniqueMonkeys){
 }
 HighPiSites<-sort(unique(HighPiSites))
 
+#June 2020
+#Let's look at the sites that have high freq in stock 
+HighStockFreqSites<-c(155, 156, 171, 182, 233, 265, 283, 335)
+HighPiSites<-HighStockFreqSites
 
 #Make one plot with all high freq sites in all monkeys
 #pdf(paste0("Output/HighPiSitesFrequencies",Sys.Date(),".pdf"))
@@ -64,9 +68,8 @@ counter = counter + 1
 }
 #dev.off()
 
-
 #Make one plot per monkey? Show sites per week
-pdf(paste0("Output/HighPiSitesFrequencies_Time",Sys.Date(),".pdf"))
+pdf(paste0("Output/HighFreqSitesFrequencies_Time",Sys.Date(),".pdf"))
 for (M in UniqueMonkeys){
   #M="3616"
   print(M)
@@ -93,7 +96,7 @@ for (M in UniqueMonkeys){
   lengthDF<-ncol(DFmonkey)
   plot(1:(lengthDF-1), DFmonkey[1,2:lengthDF], 
        t="n", pch=20, xlab="", xaxt="n", 
-       main=M, ylim=c(0.0001,0.1))
+       main=M, ylim=c(0.0001,0.04))
   axis(side = 1, at = 1:length(sampleinfo), labels = FALSE)
   #Not working yet! 
   text(x=1:length(sampleinfo), y=rep(0,length(sampleinfo)),

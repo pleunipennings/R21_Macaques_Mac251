@@ -7,6 +7,10 @@ library(scales)
 library(plotrix)
 library(RColorBrewer)
 
+source("Rscripts/CPG_Function.R")
+source("Rscripts/WTAA_consensus.R")
+source("Rscripts/MUTAA.R")
+source("Rscripts/SynNonSyn.R")
 
 #* Transition function*
 transition<-function(nuc){

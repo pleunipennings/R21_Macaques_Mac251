@@ -3,17 +3,14 @@ getMUTAA <- function(df){
   
   #Assign consensus to a variable
   cons =  as.character(df$MajNt)
-  
   #Create "MUTAA" category if not already
   if (length(which(names(df)=="MUTAA"))==0){
     df$MUTAA=0}
-  
-
   #Loop for mutated codon
   frame = 3
   for(x in seq(frame, length(cons) - 2, 3)){ #PSP June 2020 start translating at pos 3
     codon <- c(cons[x], cons[x+1], cons[x+2])
-    mutated_codon <- codon
+    #mutated_codon <- codon
     if(codon[1] == "a"){
       mutated_codon <- replace(x=mutated_codon, values=c("g", codon[2], codon[3]))
     }
@@ -56,10 +53,35 @@ getMUTAA <- function(df){
     }
     df$MUTAA[x+2] <- translate(mutated_codon)
   }
-  
-  #Insert value into column
-  #df$MUTAA<-MUTAA
+  return(df)
+}
 
-  #Return data frame
+getMUTAA_onemut <- function(df){
+  #first for the "a" mutation
+  #Assign consensus to a variable
+  cons =  as.character(df$StockMajNt)
+  #Create "MUTAA" category if not already
+  df$MUTAAa=0; df$MUTAAc=0; df$MUTAAg=0; df$MUTAAt=0; 
+  #Loop for mutated codon
+  frame = 3
+  for(x in seq(frame, length(cons) - 2, 3)){ #PSP June 2020 start translating at pos 3
+    codon <- c(cons[x], cons[x+1], cons[x+2])
+    mut="a"
+    df$MUTAAa[x] <- translate(c(mut, codon[2], codon[3]))
+    df$MUTAAa[x+1] <- translate(c(codon[1], mut, codon[3]))
+    df$MUTAAa[x+2] <- translate(c(codon[1], codon[2], mut))
+    mut="c"
+    df$MUTAAc[x] <- translate(c(mut, codon[2], codon[3]))
+    df$MUTAAc[x+1] <- translate(c(codon[1], mut, codon[3]))
+    df$MUTAAc[x+2] <- translate(c(codon[1], codon[2], mut))
+    mut="g"
+    df$MUTAAg[x] <- translate(c(mut, codon[2], codon[3]))
+    df$MUTAAg[x+1] <- translate(c(codon[1], mut, codon[3]))
+    df$MUTAAg[x+2] <- translate(c(codon[1], codon[2], mut))
+    mut="t"
+    df$MUTAAt[x] <- translate(c(mut, codon[2], codon[3]))
+    df$MUTAAt[x+1] <- translate(c(codon[1], mut, codon[3]))
+    df$MUTAAt[x+2] <- translate(c(codon[1], codon[2], mut))
+  }
   return(df)
 }

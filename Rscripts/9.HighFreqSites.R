@@ -1,13 +1,12 @@
-source("Rscripts/BaseRscript2.R")
 #OK, my next goal is to create a DF for each monkey (but starting with one 4016)
 #rows are compartments and columns are nucleotide positions
 
-read.csv("OriginalData/SampleSheetMac251AllSamples.csv", stringsAsFactors = FALSE)->SampleSheet
-SeqDataFiles<-list.files("ProcessedData/",pattern="SeqData.csv$", recursive = TRUE)
-SampleSheet$Week<-as.numeric(SampleSheet$Week)
-SampleSheet<-SampleSheet[order(SampleSheet$Week),]
+source("Rscripts/BaseRscript2.R")
+#SV is stockvirus, Samplesheet, UniqueMonkeys 
 
-UniqueMonkeys<-unique(SampleSheet$Monkey)
+head(SV)
+plot(sort(SV$mutFreq[SV$TotalReads>readscutoff]), log="y")
+HighFreqSites<-SV$pos[which(SV$mutFreq>0.008 & SV$TotalReads>readscutoff)]
 
 #First, let's make a list of high freq sites (or high pi sites, easier)
 HighPiSites <- c()
@@ -37,8 +36,7 @@ HighPiSites<-sort(unique(HighPiSites))
 
 #June 2020
 #Let's look at the sites that have high freq in stock 
-HighStockFreqSites<-c(155, 156, 171, 182, 233, 265, 283, 335)
-HighPiSites<-HighStockFreqSites
+HighPiSites<-HighFreqSites
 
 #Make one plot with all high freq sites in all monkeys
 #pdf(paste0("Output/HighPiSitesFrequencies",Sys.Date(),".pdf"))

@@ -11,6 +11,28 @@ source("Rscripts/CPG_Function.R")
 source("Rscripts/WTAA_consensus.R")
 source("Rscripts/MUTAA.R")
 source("Rscripts/SynNonSyn.R")
+source("Rscripts/CPG_Function.R")
+
+readscutoff=500
+nucleotides =c("a", "c", "g", "t")
+
+read.csv("OriginalData/SampleSheetMac251AllSamples.csv", stringsAsFactors = FALSE)->SampleSheet
+SampleSheet$Week<-as.numeric(SampleSheet$Week)
+SampleSheet$Tissue<-"Lung"
+SampleSheet$Tissue[SampleSheet$Sample=="stockvirus"|SampleSheet$Sample=="control"]<-""
+SampleSheet$Tissue[grep(pattern ="LN", SampleSheet$Sample)]<-"LN"
+SampleSheet$Tissue[SampleSheet$Sample=="plasma"]<-"Plasma"
+SampleSheet<-SampleSheet[order(SampleSheet$Week),]
+SampleSheet<-SampleSheet[order(SampleSheet$Tissue),]
+
+UniqueMonkeys<-unique(SampleSheet$Monkey)
+UniqueMonkeys<-UniqueMonkeys[UniqueMonkeys!="stockvirus"&UniqueMonkeys!="control"]
+
+r=which(SampleSheet$Monkey=="stockvirus")
+sdf=SampleSheet$SeqDataFileName[r]
+print(sdf)
+SV<-read.csv(paste0("ProcessedData/SeqData/",sdf), row.names = 1)
+dim(SV)
 
 #* Transition function*
 transition<-function(nuc){

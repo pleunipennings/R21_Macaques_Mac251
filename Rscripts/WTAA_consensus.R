@@ -16,14 +16,37 @@ getWTAA<-function(df){
     codon <- c(cons[x], cons[x+1], cons[x+2])
     #print(paste0(x, codon))
     new_AA <- seqinr::translate(codon)
+    print(new_AA)
     df$WTAA [x] <- new_AA
     df$WTAA [x+1] <- new_AA
     df$WTAA [x+2] <- new_AA
   }
 
-  #Insert value into column
-  #df$WTAA_consensus <-WTAA_consensus 
+  return(df)
+}
 
-  #Return the data frame
+
+getWTAA_Stock<-function(df){
+  #Assign consensus to a variable
+  df$StockMajNt<-as.character(df$StockMajNt)
+  df$StockMajNt[is.na(df$StockMajNt)]<-"n"
+  cons =  as.character(df$StockMajNt)
+  
+  #Create "WTAA" column if not already
+  if (length(which(names(df)=="WTAA_stock"))==0){
+    df$WTAA_stock =0}
+  
+  #Loop for translating consensus
+  frame = 3
+  for(x in seq(frame, length(cons) - 2, 3)){ #PSP June 2020 start translating at pos 3
+    codon <- c(cons[x], cons[x+1], cons[x+2])
+    #print(paste0(x, codon))
+    new_AA <- seqinr::translate(codon)
+    #print(new_AA)
+    df$WTAA_stock [x] <- new_AA
+    df$WTAA_stock [x+1] <- new_AA
+    df$WTAA_stock [x+2] <- new_AA
+  }
+  
   return(df)
 }

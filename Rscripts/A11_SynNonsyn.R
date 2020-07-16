@@ -1,19 +1,15 @@
 #Here I will try to determine what are synonymous and non-synonymous sites. 
 
 source("Rscripts/BaseRscript2.R")
-source("Rscripts/WTAA_consensus.R")
-source("Rscripts/MUTAA.R")
-source("Rscripts/SynNonSyn.R")
 
-read.csv("OriginalData/SampleSheetMac251AllSamples.csv", stringsAsFactors = FALSE)->SampleSheet
-#SeqDataFiles<-list.files("ProcessedData/",pattern="SeqData.csv$", recursive = TRUE)
-SampleSheet$Week<-as.numeric(SampleSheet$Week)
-SampleSheet<-SampleSheet[order(SampleSheet$Week),]
-UniqueMonkeys<-unique(SampleSheet$Monkey)
+#read.csv("OriginalData/SampleSheetMac251AllSamples.csv", stringsAsFactors = FALSE)->SampleSheet
+#SampleSheet$Week<-as.numeric(SampleSheet$Week)
+#SampleSheet<-SampleSheet[order(SampleSheet$Week),]
+#UniqueMonkeys<-unique(SampleSheet$Monkey)
 SampleSheet$pvalueSynNonSyn<-NA
 
-pdf(paste0("Output/SynNonSyn_6000totalreads_CpGData",Sys.Date(),".pdf"))
-readscutoff=6000
+pdf(paste0("Output/SynNonSyn_500totalreads",Sys.Date(),".pdf"))
+#plot frequencies
 for (M in UniqueMonkeys){
   #M=UniqueMonkeys[1]
   monkeyrows<-which(SampleSheet$Monkey==M)
@@ -23,13 +19,8 @@ for (M in UniqueMonkeys){
   for (mr in monkeyrows){
     sdf=SampleSheet$SeqDataFileName[mr]
     print(sdf)
-    X<-read.csv(paste0("ProcessedData/DataCpG/",sdf), row.names = 1)
-    
-    #for (sdf in SampleSheet$SeqDataFileName){
-    #X<-read.csv(paste0("ProcessedData/SeqData/",sdf), row.names = 1)
-    X<-getWTAA(X)
-    X<-getMUTAA(X)
-    X<-synFunction(X)
+    X<-read.csv(paste0("ProcessedData/SeqData/",sdf), row.names = 1)
+    #X<-X[X$MajNt=="t",]
     
     #print(paste0(X$WTAA[seq(3,nrow(X)-2,3)],collapse = ""))
     
@@ -58,9 +49,8 @@ for (M in UniqueMonkeys){
   }
 }
 dev.off()
-#First 90 nucleotides are in frame :-) 
 
-pdf(paste0("Output/SynNonSynPvaluePlasmaVsRest_6000Totalreads_CpGData",Sys.Date(),".pdf"))
+#pdf(paste0("Output/SynNonSynPvaluePlasmaVsRest_6000Totalreads",Sys.Date(),".pdf"))
 
 plot(c(1,2), c(0,0), ylim=c(0,0.6), col=0, xlim=c(0.5, 2.5), 
      main = "pvalues comparison syn vs nonsyn sites")
@@ -71,10 +61,10 @@ for (i in 1:nrow(SampleSheet)){
   points(x, SampleSheet$pvalueSynNonSyn[i])
 }
 points(1, mean(SampleSheet$pvalueSynNonSyn[SampleSheet$Sample=="plasma"]), col=2,pch=16, cex=2)
-points(2, mean(SampleSheet$pvalueSynNonSyn[SampleSheet$Sample!="plasma"]), col=2,pch=16, cex=2)
+points(2, mean(SampleSheet$pvalueSynNonSyn[SampleSheet$Sample!="plasma"], na.rm=TRUE), col=2,pch=16, cex=2)
 
 wilcox.test(SampleSheet$pvalueSynNonSyn[SampleSheet$Sample=="plasma"], SampleSheet$pvalueSynNonSyn[SampleSheet$Sample!="plasma"])
-dev.off()
+#dev.off()
 
 write.csv(x=SampleSheet,file = "OriginalData/SampleSheetMac251AllSamples.csv", row.names = FALSE)
 
@@ -84,7 +74,19 @@ length(which(SampleSheet$pvalueSynNonSyn[SampleSheet$Sample=="plasma"]<0.05)),
 " out of ", 
 length(which(SampleSheet$Sample=="plasma"& !is.na(SampleSheet$pvalueSynNonSyn))), " significant"))
 
+print(length(which(SampleSheet$pvalueSynNonSyn[SampleSheet$Sample=="plasma"]<0.05))/length(which(SampleSheet$Sample=="plasma"& !is.na(SampleSheet$pvalueSynNonSyn))))
+
 print(paste0("non-plasma: ", 
              length(which(SampleSheet$pvalueSynNonSyn[SampleSheet$Sample!="plasma" & SampleSheet$Sample!="stockvirus"]<0.05)), 
              " out of ", 
              length(which(SampleSheet$Sample!="plasma" & SampleSheet$Sample!="stockvirus" & !is.na(SampleSheet$pvalueSynNonSyn))), " significant"))
+
+print(length(which(SampleSheet$pvalueSynNonSyn[SampleSheet$Sample!="plasma"]<0.05))/length(which(SampleSheet$Sample!="plasma"& !is.na(SampleSheet$pvalueSynNonSyn))))
+
+SampleSheetLN<-SampleSheet[grep(pattern ="LN", SampleSheet$Sample),]
+print(length(which(SampleSheetLN$pvalueSynNonSyn<0.05))/length(which(!is.na(SampleSheetLN$pvalueSynNonSyn))))
+
+SampleSheetLung<-SampleSheet[-grep(pattern ="LN", SampleSheet$Sample),]
+SampleSheetLung<-SampleSheetLung[which(SampleSheetLung$Sample!="plasma"&SampleSheetLung$Sample!="stockvirus"&SampleSheetLung$Sample!="control"),]
+print(length(which(SampleSheetLung$pvalueSynNonSyn<0.05))/length(which(!is.na(SampleSheetLung$pvalueSynNonSyn))))
+

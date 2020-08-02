@@ -1,0 +1,24 @@
+
+Notes to myself. 
+
+I talked to Ling and Zandrea today. It is March 25th. 
+
+One of the things I discovered when I finally analyzed the data from the R21 animals is that the stock virus is not very diverse at all. I had thought it was diverse because they refer to it as a swarm. 
+
+Z&L are going to find out a bit about the stockvirus. 
+
+Here are some things that I wanted to find out: 
+
+***********************************************************************
+One of the questions we had was when the stock virus was sequenced. 
+Stock 6 was sequenced on July 19th 2019. 
+Soctk 5 was sequenced March 13th 2019. 
+
+So we should probably trust stock 6 more. 
+
+So, I decided to filter like Kaho has done and remove everything with less than 10000 reads at least for the stock. 
+
+Now, let's see what we have. 
+
+For the most common mutations,  
+
